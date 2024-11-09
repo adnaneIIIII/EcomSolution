@@ -31,6 +31,7 @@ import { productSchema } from "@/app/lib/zodSchemas";
 import { createProduct } from "@/app/actions";
 import Image from "next/image";
 import { categories } from "@/app/lib/category";
+import { SubmiteBotton } from "@/app/components/submitebutton";
 
 export default function Create() {
   const [images, setImages] = useState<string[]>([]);
@@ -192,7 +193,7 @@ export default function Create() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button>Create Product</Button>
+          <SubmiteBotton/>
         </CardFooter>
       </Card>
     </form>

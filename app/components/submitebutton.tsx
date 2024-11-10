@@ -4,7 +4,8 @@ import { Loader2 } from "lucide-react";
 import { Loadable } from "next/dist/server/route-modules/pages/vendored/contexts/entrypoints";
 import { useFormStatus } from "react-dom"
 
-export function SubmiteBotton() { 
+export function SubmiteBotton({text}:{text:string}) {
+
     const {pending} = useFormStatus(); 
     return (
 
@@ -15,7 +16,7 @@ export function SubmiteBotton() {
             Please wait
             </Button>
         ):(
-            <Button type="submit">Create Product</Button>
+            <Button type="submit">{text}</Button>
         )}
         </>
     )

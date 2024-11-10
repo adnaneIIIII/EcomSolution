@@ -193,7 +193,7 @@ export default function Create() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <SubmiteBotton/>
+          <SubmiteBotton text="Create Product"/>
         </CardFooter>
       </Card>
     </form>

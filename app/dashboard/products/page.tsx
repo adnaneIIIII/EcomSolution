@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal, PlusCircle, UserIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Table,
   TableBody,
@@ -25,8 +26,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import prisma from "@/app/lib/db";
 
-export default function Products() {
+async function getData() {
+  const data = await prisma.product.findMany({
+    orderBy: {
+      createAt: "desc",
+    },
+  });
+  return data;
+}
+
+export default async function Products() {
+  const data = await getData();
   return (
     <>
       <div className="flex items-center justify-end">
@@ -55,35 +67,44 @@ export default function Products() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <UserIcon className="w-16 h-16" />
-                </TableCell>
-                <TableCell>Product 1</TableCell>
-                <TableCell>Active</TableCell>
-                <TableCell>$24.94</TableCell>
-                <TableCell>2024-11-01</TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size={"icon"}>
-                        <MoreHorizontal className="w-5 h-5" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      className=" text-left py-2 bg-gray-50 border border-gray-300 border-opacity-50 rounded-lg"
-                    >
-                      <DropdownMenuLabel >
-                        Action
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator className="mt-1" />
-                      <DropdownMenuItem >Edite</DropdownMenuItem>
-                      <DropdownMenuItem >Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+              {data.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <Image
+                      src={item.images[0]}
+                      width={100}
+                      height={100}
+                      alt="rounded-md object-cover h-16 w-16"
+                    />
+                  </TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.status}</TableCell>
+                  <TableCell>{item.price}</TableCell>
+                  <TableCell>{item.createAt.toLocaleDateString()}</TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size={"icon"}>
+                          <MoreHorizontal className="w-5 h-5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        className=" text-left py-2 bg-gray-50 border border-gray-300 border-opacity-50 rounded-lg"
+                      >
+                        <DropdownMenuLabel>Action</DropdownMenuLabel>
+                        <DropdownMenuSeparator className="mt-1" />
+                        <DropdownMenuItem asChild>
+                          <Link href={`/dashboard/products/${item.id}`}>
+                            Edite
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, PlusCircle } from "lucide-react";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,13 +15,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -26,43 +22,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { MoreHorizontal, PlusCircle, User2 } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 import prisma from "@/app/lib/db";
+import Image from "next/image";
 
 async function getData() {
-  const data = await prisma.product.findMany({
+  const data = await prisma.banner.findMany({
     orderBy: {
-      createAt: "desc",
+      createdAt: "desc",
     },
   });
   return data;
 }
 
-export default async function Products() {
+async function banner() {
   const data = await getData();
   return (
     <>
       <div className="flex items-center justify-end">
-        <Button asChild className="flex items-center gap-x-2 ">
-          <Link href="./products/create" className="flex items-center">
+        <Button>
+          <Link href="./banner/create" className="flex items-center gap-x-2">
             <PlusCircle className="w-3.5 h-3.5" />
-            <span>Add Products</span>
+            <span>Add Banner</span>
           </Link>
         </Button>
       </div>
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Products</CardTitle>
-          <CardDescription>View all your products</CardDescription>
+          <CardTitle>Banner</CardTitle>
+          <CardDescription>View all your banner</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Image</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead className="">Image</TableHead>
+                <TableHead>Title</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -71,16 +68,14 @@ export default async function Products() {
                 <TableRow key={item.id}>
                   <TableCell>
                     <Image
-                      src={item.images[0]}
-                      width={100}
-                      height={100}
-                      alt="rounded-md object-cover h-16 w-16"
+                      src={item.imageString}
+                      width={64}
+                      height={64}
+                      alt="banner"
+                      className="rounded-md object-cover h-16 w-16"
                     />
                   </TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.status}</TableCell>
-                  <TableCell>{item.price}</TableCell>
-                  <TableCell>{item.createAt.toLocaleDateString()}</TableCell>
+                  <TableCell className="font-medium">{item.title}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -95,14 +90,10 @@ export default async function Products() {
                         <DropdownMenuLabel>Action</DropdownMenuLabel>
                         <DropdownMenuSeparator className="mt-1" />
                         <DropdownMenuItem asChild>
-                          <Link href={`/dashboard/products/${item.id}`}>
-                            Edite
+                          <Link href={`/dashboard/banner/${item.id}/delete`}>
+                            delete
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href={`/dashboard/products/${item.id}/delete`}>
-                            delete
-                          </Link></DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -115,3 +106,5 @@ export default async function Products() {
     </>
   );
 }
+
+export default banner;

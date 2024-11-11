@@ -16,8 +16,8 @@ const links = [
     href: "/dashboard/orders",
   },
   {
-    name: "Categories",
-    href: "/dashboard/categories",
+    name: "Banner Pictures",
+    href: "/dashboard/banner",
   },
 ];
 
@@ -31,7 +31,7 @@ export default function Header() {
           href={link.href}
           className={cn(
             link.href === pathname
-              ? "text-black font-bold"
+              ? "text-gray-è00 font-bold"
               : "text-muted-foreground hover:text-foreground"
           )}
         >

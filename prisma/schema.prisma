@@ -45,3 +45,11 @@ enum category{
   women
   kids
 }
+
+model Banner{
+  id String @id @default(uuid())
+  title String
+  imageString String
+
+  createdAt DateTime @default(now())
+}

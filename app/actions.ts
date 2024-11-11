@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { productSchema } from "./lib/zodSchemas";
@@ -32,13 +32,13 @@ export async function createProduct(prevState: unknown, formData: FormData) {
       price: submission.value.price,
       images: flattenUrls,
       category: submission.value.category,
-      isFeatured: submission.value.isFeatured,
+      isFeatured: submission.value.isFeatured === true ? true : false,
     },
   });
   redirect("/dashboard/products");
 }
 
-export async function Edite(prevState: any,formData: FormData) {
+export async function Edite(prevState: any, formData: FormData) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -48,15 +48,15 @@ export async function Edite(prevState: any,formData: FormData) {
   const submission = parseWithZod(formData, {
     schema: productSchema,
   });
-  if(submission.status !== "success"){ 
+  if (submission.status !== "success") {
     return submission.reply();
   }
   const flattenUrls = submission.value.images.flatMap((urlString) =>
     urlString.split(",").map((url) => url.trim())
   );
-  const productId = formData.get("productId")as string; 
+  const productId = formData.get("productId") as string;
   await prisma.product.update({
-    where: {  
+    where: {
       id: productId,
     },
     data: {
@@ -66,7 +66,23 @@ export async function Edite(prevState: any,formData: FormData) {
       price: submission.value.price,
       images: flattenUrls,
       category: submission.value.category,
-      isFeatured: submission.value.isFeatured,
+      isFeatured: submission.value.isFeatured === true ? true : false,
+    },
+  });
+  redirect("/dashboard/products");
+}
+
+export async function deleteProduct(formData: FormData) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user || user.email === "admin@hog.com") {
+    return redirect("/dashboard");
+  }
+
+  await prisma.product.delete({
+    where: {
+      id: formData.get("productId") as string,
     },
   });
   redirect("/dashboard/products");

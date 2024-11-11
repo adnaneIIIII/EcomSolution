@@ -1,22 +1,34 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { Loadable } from "next/dist/server/route-modules/pages/vendored/contexts/entrypoints";
 import { useFormStatus } from "react-dom"
 
-export function SubmiteBotton({text}:{text:string}) {
+type buttonProps = {
+    text:string;
+    variant?:
+    | "default" 
+    | "destructive" 
+    | "outline" 
+    | "secondary" 
+    | "ghost" 
+    | "link" 
+    | null 
+    | undefined;
+}
+
+export function SubmiteBotton({text,variant}:buttonProps){
 
     const {pending} = useFormStatus(); 
     return (
 
         <>
         {pending ? (
-            <Button disabled>
+            <Button disabled variant={variant}>
             <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
             Please wait
             </Button>
         ):(
-            <Button type="submit">{text}</Button>
+            <Button variant={variant} type="submit">{text}</Button>
         )}
         </>
     )

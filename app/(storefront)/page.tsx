@@ -1,9 +1,14 @@
 import React from "react";
+import Hero from "../components/storefront/hero";
+import CategorySelection from "../components/storefront/categorySelection";
+import FeaturedProducts from "../components/storefront/FeaturedProducts";
 
 function IndexPage() {
   return (
     <div>
-      <h1>Index</h1>
+      
+      <CategorySelection />
+      <FeaturedProducts/>
     </div>
   );
 }

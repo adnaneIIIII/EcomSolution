@@ -6,7 +6,7 @@ import FeaturedProducts from "../components/storefront/FeaturedProducts";
 function IndexPage() {
   return (
     <div>
-      
+      <Hero />
       <CategorySelection />
       <FeaturedProducts/>
     </div>

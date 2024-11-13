@@ -22,7 +22,7 @@ export const navbarlinks = [
   {
     id: 3,
     title: "Women",
-    href: "/products/Women",
+    href: "/products/women",
   },
   {
     id: 4,
@@ -40,8 +40,9 @@ function NavbarLinks() {
           href={link.href}
           className={cn(
             link.href === pathname
-              ? "text-black font-bold"
-              : "text-muted-foreground font-medium hover:text-foreground"
+              ? "bg-muted font-bold"
+              : "hover:bg-muted hover:bg-opacity-75",
+            "group p-2 font-medium rounded-md"
           )}
         >
           {link.title}

@@ -7,7 +7,6 @@ import UserDropdown from "./UserDropdown";
 import { Button } from "@/components/ui/button";
 import {
   LoginLink,
-  LogoutLink,
   RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 async function Navbar() {
@@ -45,7 +44,7 @@ async function Navbar() {
             <Button variant={"ghost"} asChild>
               <LoginLink>Sign in</LoginLink>
             </Button>
-            <span className="h-6 w-px bg-gray-200"></span>
+            <span className="h-6 w-px bg-gray-900"></span>
             <Button variant={"ghost"} asChild>
               <RegisterLink>Create Account</RegisterLink>
             </Button>

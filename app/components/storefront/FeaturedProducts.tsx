@@ -18,6 +18,7 @@ async function getdata() {
     orderBy: {
       createAt: "desc",
     },
+    take: 3,
   });
   return data;
 }
@@ -25,7 +26,7 @@ async function FeaturedProducts() {
   const data = await getdata();
   return (
     <>
-      <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+      <h2 className=" text-2xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
         FeaturedProducts
       </h2>
       <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

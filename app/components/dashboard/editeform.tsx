@@ -54,6 +54,7 @@ function Editeform({ data }: IAppProps) {
   const [lastResult, action] = useActionState(Edite, undefined);
   const [from, fields] = useForm({
     lastResult,
+
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: productSchema });
     },

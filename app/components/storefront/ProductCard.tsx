@@ -16,9 +16,10 @@ type iAppProps = {
     description: string;
     price: number;
     images: string[];
-    category: string;
+
   };
 };
+
 function ProductCard({ item }: iAppProps) {
   return (
     <div className="rounded-lg">
